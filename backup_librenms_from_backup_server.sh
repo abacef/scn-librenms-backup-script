@@ -19,7 +19,7 @@ scp $host:/root/librenms.sql.zip $backup_folder
 ssh $host "rm /root/librenms.sql.zip"
 
 echo "backing up the RRD files (graph data)"
-ssh $host 'zip -q -r /root/rrd.zip /root/librenms_deployment3/compose/librenms/rrd'
+ssh $host 'cd /root/librenms_deployment3/compose/librenms/ && zip -q -r /root/rrd.zip rrd'
 scp $host:/root/rrd.zip $backup_folder/rrd.zip
 ssh $host 'rm /root/rrd.zip'
 
