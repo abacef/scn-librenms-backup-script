@@ -56,16 +56,16 @@
         state: absent
 
 
-    # - name: Zip the RRD directory on the librenms server
-    #   shell: "cd /root/librenms_deployment3/compose/librenms/ && zip -q -r {{ rrd_zip }} rrd"
+    - name: Zip the RRD directory on the librenms server
+      shell: "cd /root/librenms_deployment3/compose/librenms/ && zip -q -r {{ rrd_zip }} rrd"
 
-    # - name: Fetch the RRD zip from the librenms server to here
-    #   fetch:
-    #     src: "{{ rrd_zip }}"
-    #     dest: "{{ BACKUP_FOLDER }}/"
-    #     flat: yes
+    - name: Fetch the RRD zip from the librenms server to here
+      fetch:
+        src: "{{ rrd_zip }}"
+        dest: "{{ BACKUP_FOLDER }}/"
+        flat: yes
 
-    # - name: Remove the compressed mysqldump file on the librenms server
-    #   file:
-    #     path: "{{ rrd_zip }}"
-    #     state: absent
+    - name: Remove the compressed mysqldump file on the librenms server
+      file:
+        path: "{{ rrd_zip }}"
+        state: absent
