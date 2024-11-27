@@ -30,7 +30,7 @@
         container: "{{ db_container }}"
         command: "sh -c 'mysqldump librenms -u librenms --password={{ MYSQL_PASSWORD }} > {{ sqldump }}'"
 
-    - name: Copy librenms database dump from the db docker containr to the librenms server
+    - name: Copy librenms database dump from the db docker container to the librenms server
       shell: docker cp {{ db_container }}:{{ sqldump }} {{ sqldump }}
 
     - name: Remove the librenms database dump from the db docker container
@@ -39,7 +39,7 @@
         command: "rm {{ sqldump }}"
 
     - name: Compress the mysqldump file on the librenms server
-      shell: zip {{ sqldump_compressed }} {{ sqldump }}
+      shell: cd /tmp && zip {{ sqldump_compressed }} librenms.sql
 
     - name: Remove the uncompressed mysqldump file from the librenms server
       shell: rm {{ sqldump }}
@@ -56,16 +56,16 @@
         state: absent
 
 
-    - name: Zip the RRD directory on the librenms server
-      shell: "cd /root/librenms_deployment3/compose/librenms/ && zip -q -r {{ rrd_zip }} rrd"
+    # - name: Zip the RRD directory on the librenms server
+    #   shell: "cd /root/librenms_deployment3/compose/librenms/ && zip -q -r {{ rrd_zip }} rrd"
 
-    - name: Fetch the RRD zip from the librenms server to here
-      fetch:
-        src: "{{ rrd_zip }}"
-        dest: "{{ BACKUP_FOLDER }}/"
-        flat: yes
+    # - name: Fetch the RRD zip from the librenms server to here
+    #   fetch:
+    #     src: "{{ rrd_zip }}"
+    #     dest: "{{ BACKUP_FOLDER }}/"
+    #     flat: yes
 
-    - name: Remove the compressed mysqldump file on the librenms server
-      file:
-        path: "{{ rrd_zip }}"
-        state: absent
+    # - name: Remove the compressed mysqldump file on the librenms server
+    #   file:
+    #     path: "{{ rrd_zip }}"
+    #     state: absent
